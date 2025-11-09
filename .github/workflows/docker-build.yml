@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  build-and-update-manifests:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,22 @@ jobs:
           context: .
           push: true
           tags: gabrielchialle/hello-app:latest
+
+      - name: Clone manifests repo via HTTPS
+        run: |
+          git clone https://${{ secrets.MANIFESTS_PAT }}@github.com/GabrielChialle/hello-manifests.git
+        working-directory: ${{ github.workspace }}
+
+      - name: Update image tag in deployment
+        run: |
+          cd hello-manifests
+          sed -i "s#image: gabrielchialle/hello-app:.*#image: gabrielchialle/hello-app:latest#g" deployment.yaml
+
+      - name: Commit and push changes
+        run: |
+          cd hello-manifests
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update image to latest"
+          git push origin main
