@@ -10,7 +10,7 @@ async def read_root():
     <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <title>Olá Gabriel!</title>
+        <title>Hello-app</title>
         <style>
             body {
                 background-color: #0b3d91; /* Azul escuro */
@@ -29,7 +29,7 @@ async def read_root():
         </style>
     </head>
     <body>
-        <h1>Bem-vindo</h1>
+        <h1>Olá Gabriel!</h1>
     </body>
     </html>
     """
